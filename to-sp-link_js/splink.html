@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>スマートフォン用ページを表示する場合はこちらをタップ | jsバージョン</title>
+</head>
+<body>
+
+<!-- UA判定、クエリ取得のスクリプトを呼び出し -->
+<script type="text/javascript" src="splink.js"></script>
+<script type="text/javascript">
+//UAチェックの結果を取得
+var uaValue = uaCheck();
+//クエリ取得の結果を取得
+var mode = getParam();
+//現在のURLを取得
+var uri = location.pathname;
+//現在のURLを基準に、spページのURLを生成
+var redirect_url = "/sp" + uri;
+
+//UAがモバイル、スマートフォンか
+if (uaValue === "mobile") {
+	//クエリが"pc"モードか
+	if (mode !== "pc") {
+		//モバイル端末でpcモードではない場合、spページへ遷移
+		location.href = redirect_url;
+	} else {
+		//モバイル端末でpcモードを閲覧している場合、ページ上部にspページへ遷移するリンクを設置
+
+		//jQueryバージョン
+		//設置する要素を定義
+		var splink_el = '<div class="sp_link"><a href="##"><img src="btn_sp_link.png" alt="スマートフォン用ページを表示する場合はこちらをタップしてください。"></a></div>';
+		//bodyタグの直下に挿入し、新規classを追加
+		$("body").prepend(splink_el).addClass("vmode_pc");
+
+		//javascriptバージョン
+		//設置する要素を置く場所を定義
+		var element = document.createElement("div");
+		element.classList.add('sp_link');
+		//設置する要素を定義し、htmlを代入
+		element.innerHTML = '<a href="##"><img src="btn_sp_link.png" alt="スマートフォン用ページを表示する場合はこちらをタップしてください。"></a>';
+		//bodyタグの直下に挿入し、新規classを追加
+		document.body.insertBefore(element, document.body.firstChild);
+		document.body.classList.add('vmode_pc');
+	}
+}
+</script>
+
+</body>
+</html>
