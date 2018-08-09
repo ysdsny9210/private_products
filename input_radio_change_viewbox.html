@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<!--
+Created using JS Bin
+http://jsbin.com
+
+Copyright (c) 2017 by pencilyoshida (http://jsbin.com/sekaxan/8/edit)
+
+Released under the MIT license: http://jsbin.mit-license.org
+-->
+<meta name="robots" content="noindex">
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>JS Bin</title>
+    <script src="https://code.jquery.com/jquery-1.8.3.js"></script>
+<style id="jsbin-css">
+
+#radioArea{
+    padding:20px;
+    border:1px solid #CCCCCC;
+}
+#radioArea div {
+    margin-top:15px;
+    padding:15px 0;
+}
+#test1box {
+    background:#FFEEDD;
+}
+#test2box {
+    background:#DDEEFF;
+}
+</style>
+</head>
+<body>
+    <p>ラジオボタンの選択値によって、下部エリアの表示を切り替える</p>
+    <ul>
+    	<li>ラジオボタンの id(radioId)に「box」を付けた radioId+"box" のid値(viewId)のdivを用意</li>
+    	<li>ラジオボタンはいくつでも作成可</li>
+    	<li>div#viewId が無くとも、OK</li>
+    </ul>
+
+    <div id="radioArea">
+        <input type="radio" id="test1" name="_test" checked="checked"><label for="test1">テスト１</label>
+        <input type="radio" id="test2" name="_test"><label for="test2">テスト２</label>
+        <input type="radio" id="test3" name="_test"><label for="test3">テスト３</label>
+        <div id="test1box">テストボックス１</div>
+        <div id="test2box">テストボックス２</div>
+    </div>
+
+<script id="jsbin-javascript">
+
+(function($){
+  $.fn._radio = function(){
+    return this.each(function(){
+        var $area = $(this);
+        var $box = $area.find("div");
+        var $btn = $area.find("input");
+        $box.hide();
+        function showbox() {
+        	var checkid = $area.find("input:checked").attr("id");
+            var $viewbox = $area.find("#"+checkid+"box");
+            $viewbox.show();
+        }
+        showbox();
+
+        $btn.on("click", function(){
+            $box.hide();
+            showbox();
+        });
+    });
+  };
+})(jQuery);
+
+$(function(){
+    $("#radioArea")._radio();
+});
+
+</script>
+</body>
+</html>
